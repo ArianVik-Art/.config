@@ -67,12 +67,16 @@ map('t', '', "")
 map('t', '', "")
 map('n', '<leader>lf', vim.lsp.buf.format)
 
+vim.lsp.enable({ "lua_ls", })
+
 -- colors
 require "vague".setup({ transparent = true })
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
 
 -- snippets
+require("luasnip").setup({ enable_autosnippets = true })
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
 local ls = require("luasnip")
 map({ "i" }, "<C-e>", function() ls.expand() end, { silent = true })
 map({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true })
