@@ -1,6 +1,16 @@
  -- enable lsp server
 vim.lsp.enable('lua_ls')
-
+vim.lsp.config("lua_ls",
+ {
+   settings = {
+     Lua = {
+       workspace = {
+         library = vim.api.nvim_get_runtime_file(" ", true),
+       }
+     }
+   }
+ })
+ 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
