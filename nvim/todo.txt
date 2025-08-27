@@ -1,0 +1,23 @@
+Todo:
+
+- Make some convenient way to push, pull, get repos, etc.
+
+
+  clone: 
+    1. cd into repo locaiton
+    2. git clone [https link]
+
+  pull:
+    1.
+    2.
+
+  push:
+    1. 
+    2.
+
+
+  diff against head revision:
+    1. cd into repo root
+    2. git show HEAD:[path/to/file (i.e. src/main.cpp)]
+    3. diff against current buffer with vim's diff tool.
+
