@@ -3,6 +3,7 @@ require('config.globals')
 require('config.options')
 require('config.autocmd')
 require('config.lsp')
+require("custom.cd-buffer-root")
 
 vim.opt.clipboard:prepend { "unnamed", "unnamedplus" } -- sync yanks to system clipboard
 vim.opt.virtualedit = "all"
@@ -46,21 +47,18 @@ map({ 'n', 'v', 'x' }, '<leader>S', ':sf #<CR>')
 map({ 'n', 'v', 'x' }, 'dw', 'diw')
 
 vim.pack.add({
-	{ src = "https://github.com/vague2k/vague.nvim" },
-	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/echasnovski/mini.pick" },
-	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = "https://github.com/mason-org/mason.nvim" },
-	{ src = 'https://github.com/NvChad/showkeys',                 opt = true },
-	{ src = "https://github.com/L3MON4D3/LuaSnip" },
-	{ src = "https://github.com/folke/which-key.nvim"},
-	{ src = "https://github.com/kdheepak/lazygit.nvim"},
+  { src = "https://github.com/vague2k/vague.nvim" },
+  { src = "https://github.com/stevearc/oil.nvim" },
+  { src = "https://github.com/nvim-mini/mini.pick" },
+  { src = "https://github.com/nvim-mini/mini.sessions" },
+  { src = "https://github.com/mason-org/mason.nvim" },
+  { src = "https://github.com/folke/which-key.nvim" },
 })
 
 require "mason".setup()
-require "showkeys".setup({ position = "top-right" })
 require "mini.pick".setup()
-require "oil".setup()
+require "mini.sessions".setup()
+require "oil".setup({ view_options = { show_hidden = true } })
 
 map('n', '<leader>f', ":Pick files<CR>")
 map('n', '<leader>h', ":Pick help<CR>")
@@ -73,11 +71,3 @@ map('n', '<leader>lf', vim.lsp.buf.format)
 require "vague".setup({ transparent = true })
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
-
--- -- snippets
--- require("luasnip").setup({ enable_autosnippets = true })
--- require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/snippets/" })
--- local ls = require("luasnip")
--- map({ "i" }, "<C-e>", function() ls.expand() end, { silent = true })
--- map({ "i", "s" }, "<C-J>", function() ls.jump(1) end, { silent = true })
--- map({ "i", "s" }, "<C-K>", function() ls.jump(-1) end, { silent = true })

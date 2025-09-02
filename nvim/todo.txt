@@ -2,6 +2,9 @@ Todo:
 
 - Make some convenient way to push, pull, get repos, etc.
 
+  open recent projects:
+    1. interface with nvim-mini.pick to pull up a list stored as a json file in nvim-data
+    2. cd into correct location and open Oil when pressing enter
 
   clone: 
     1. cd into repo locaiton
