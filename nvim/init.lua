@@ -3,7 +3,7 @@ require('config.globals')
 require('config.options')
 require('config.autocmd')
 require('config.lsp')
-require("custom.cd-buffer-root")
+require('custom.cd-buffer-root')
 
 vim.opt.clipboard:prepend { "unnamed", "unnamedplus" } -- sync yanks to system clipboard
 vim.opt.virtualedit = "all"
@@ -47,18 +47,37 @@ map({ 'n', 'v', 'x' }, '<leader>S', ':sf #<CR>')
 map({ 'n', 'v', 'x' }, 'dw', 'diw')
 
 vim.pack.add({
-  { src = "https://github.com/vague2k/vague.nvim" },
+ 	{ src = 'https://github.com/folke/tokyonight.nvim' },
   { src = "https://github.com/stevearc/oil.nvim" },
   { src = "https://github.com/nvim-mini/mini.pick" },
   { src = "https://github.com/nvim-mini/mini.sessions" },
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/folke/which-key.nvim" },
+ 	{ src = 'https://github.com/lewis6991/gitsigns.nvim' },
 })
 
 require "mason".setup()
+require "gitsigns".setup()
+
 require "mini.pick".setup()
+vim.ui.select = MiniPick.ui_select
+vim.ui.select = function(items, opts, on_choice)
+	local start_opts = { window = { config = { width = vim.o.columns } } }
+	return MiniPick.ui_select(items, opts, on_choice, start_opts)
+end
+
 require "mini.sessions".setup()
 require "oil".setup({ view_options = { show_hidden = true } })
+
+vim.keymap.set('n', '<leader>sr', ':lua MiniSessions.select("read")<CR>')
+vim.keymap.set('n', '<leader>sa', function()
+	vim.ui.input({prompt ="Session Name: "}, function(input)
+		vim.cmd('lua MiniSessions.write("'.. input .. '")')
+
+	end
+	)
+end
+)
 
 map('n', '<leader>f', ":Pick files<CR>")
 map('n', '<leader>h', ":Pick help<CR>")
@@ -68,6 +87,6 @@ map('t', '', "")
 map('n', '<leader>lf', vim.lsp.buf.format)
 
 -- colors
-require "vague".setup({ transparent = true })
-vim.cmd("colorscheme vague")
+require "tokyonight".setup({})
+vim.cmd("colorscheme tokyonight-night") -- night moon storm day
 vim.cmd(":hi statusline guibg=NONE")
