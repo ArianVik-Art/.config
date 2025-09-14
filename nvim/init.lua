@@ -59,21 +59,7 @@ vim.pack.add({
 
 require "mason".setup()
 
-require "gitsigns".setup({
-  attach_to_untracked = true,
---  debug_mode = true,  -- Enables internal debug messages; check :messages after testing
---  signcolumn = true,  -- Explicitly enable to ensure the column is available
---  on_attach = function(bufnr)
---    print("Gitsigns successfully attached to buffer " .. bufnr)
---    -- You can add custom mappings here if needed, e.g., for hunk navigation
---  end,
-})
--- vim.api.nvim_create_autocmd("BufReadPost", {
---  callback = function()
---    print("bufreadpost triggered")
---    require("gitsigns").attach()
---  end,
---})
+require "gitsigns".setup({ attach_to_untracked = true, })
 
 require "mini.pick".setup()
 vim.ui.select = MiniPick.ui_select
@@ -92,8 +78,6 @@ map('n', '<leader>sa', function()
   )
 end
 )
-
---this is a write since the last change
 
 map('n', '<leader>sr', ':lua MiniSessions.select("read")<CR>')
 map('n', '<leader>f', ":Pick files<CR>")
