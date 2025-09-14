@@ -1,4 +1,5 @@
 --Welcome to my dank ass NVIM Config!
+
 require('config.globals')
 require('config.options')
 require('config.autocmd')
@@ -47,17 +48,32 @@ map({ 'n', 'v', 'x' }, '<leader>S', ':sf #<CR>')
 map({ 'n', 'v', 'x' }, 'dw', 'diw')
 
 vim.pack.add({
+ 	{ src = 'https://github.com/lewis6991/gitsigns.nvim' },
  	{ src = 'https://github.com/folke/tokyonight.nvim' },
   { src = "https://github.com/stevearc/oil.nvim" },
   { src = "https://github.com/nvim-mini/mini.pick" },
   { src = "https://github.com/nvim-mini/mini.sessions" },
   { src = "https://github.com/mason-org/mason.nvim" },
   { src = "https://github.com/folke/which-key.nvim" },
- 	{ src = 'https://github.com/lewis6991/gitsigns.nvim' },
 })
 
 require "mason".setup()
-require "gitsigns".setup()
+
+require "gitsigns".setup({
+  attach_to_untracked = true,
+--  debug_mode = true,  -- Enables internal debug messages; check :messages after testing
+--  signcolumn = true,  -- Explicitly enable to ensure the column is available
+--  on_attach = function(bufnr)
+--    print("Gitsigns successfully attached to buffer " .. bufnr)
+--    -- You can add custom mappings here if needed, e.g., for hunk navigation
+--  end,
+})
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+--  callback = function()
+--    print("bufreadpost triggered")
+--    require("gitsigns").attach()
+--  end,
+--})
 
 require "mini.pick".setup()
 vim.ui.select = MiniPick.ui_select
@@ -69,16 +85,17 @@ end
 require "mini.sessions".setup()
 require "oil".setup({ view_options = { show_hidden = true } })
 
-vim.keymap.set('n', '<leader>sr', ':lua MiniSessions.select("read")<CR>')
-vim.keymap.set('n', '<leader>sa', function()
-	vim.ui.input({prompt ="Session Name: "}, function(input)
-		vim.cmd('lua MiniSessions.write("'.. input .. '")')
-
-	end
-	)
+map('n', '<leader>sa', function()
+  vim.ui.input({prompt ="Session Name: "}, function(input)
+    vim.cmd('lua MiniSessions.write("'.. input .. '")')
+  end
+  )
 end
 )
 
+--this is a write since the last change
+
+map('n', '<leader>sr', ':lua MiniSessions.select("read")<CR>')
 map('n', '<leader>f', ":Pick files<CR>")
 map('n', '<leader>h', ":Pick help<CR>")
 map('n', '<leader>e', ":Oil<CR>")
